@@ -5,12 +5,15 @@ from openpyxl import load_workbook
 from openpyxl.drawing.image import Image
 
 
+""" Ejecución 6 """
+
+
 def mergeFinal():
     # Rutas de los archivos
-    ruta_archivo_csv = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\Salida\DfFinal\DataFrameFinal.csv"
-    ruta_archivo_excel = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\GA-F-97 Reporte de resultados laboratorio de servicios una muestra.xlsx"
-    ruta_carpeta_salida = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\Salida"
-    ruta_carpeta_imagenes = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\DataGeneticaGenReport\Origen\GraphReport\PNG_Images"
+    ruta_archivo_csv = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\Salida\DfFinal\DataFrameFinal.csv"
+    ruta_archivo_excel = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\GA-F-97 Reporte de resultados laboratorio de servicios una muestra.xlsx"
+    ruta_carpeta_salida = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\Salida"
+    ruta_carpeta_imagenes = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\DataGeneticaGenReport\Origen\GraphReport\PNG_Images"
 
     # Nombre de la hoja de Excel
     nombre_hoja_excel = "GA-F-97"
@@ -27,7 +30,13 @@ def mergeFinal():
 
     # Realiza el reemplazo y guarda un archivo de Excel por cada fila
     for indice, fila in df.iterrows():
-        # Crea una copia del libro de Excel
+        # Verifica si la columna 'raza' en la fila actual contiene 'UNK'
+        if fila["Raza"] == "UNK":
+            nombre_hoja_excel = "GA-F-97 UNK"
+        else:
+            nombre_hoja_excel = "GA-F-97"
+
+        # Crea una copia del libro de Excel con el nuevo nombre de hoja
         libro_copia = load_workbook(ruta_archivo_excel)
         hoja_copia = libro_copia[nombre_hoja_excel]
 
@@ -46,12 +55,19 @@ def mergeFinal():
                         )
 
         # Agregar la imagen correspondiente a la celda C68
-        idan = fila["idan"]  # Asegúrate de que el nombre de la columna sea correcto
+        idan = fila["Muestra"]  # Asegúrar que el nombre de la columna sea correcto
         ruta_imagen = f"{ruta_carpeta_imagenes}\\{idan}.png"
 
         if os.path.exists(ruta_imagen):
             img = Image(ruta_imagen)
             hoja_copia.add_image(img, "D80")
+
+        # Elimina la hoja que no se utilizó
+        hojas_a_eliminar = [
+            hoja for hoja in libro_copia.sheetnames if hoja != nombre_hoja_excel
+        ]
+        for hoja_a_eliminar in hojas_a_eliminar:
+            libro_copia.remove(libro_copia[hoja_a_eliminar])
 
         # Generar el nombre del archivo de salida
         nombre_archivo_salida = f"INFORME {fila['No de solicitud']} {fila['Código de muestra']} {fila['Nombre de Usuario']} {fila['Now']}.xlsx"
@@ -63,4 +79,4 @@ def mergeFinal():
     print("=" * 100 + "\n")
 
 
-# mergeFinal()
+mergeFinal()

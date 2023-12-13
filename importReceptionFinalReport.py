@@ -3,10 +3,12 @@ import os
 import datetime
 import shutil
 
+""" Ejecución 4 """
+
 
 def importReceptionFinalReport():
     # Ruta del archivo Excel que copiaste
-    ruta_archivo_excel = "D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\GA-F -71 2023 BD Unidad de Laboratorio de Servicios Molecular 2023-01-02.xlsx"
+    ruta_archivo_excel = "D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\GA-F -71 2023 BD Unidad de Laboratorio de Servicios Molecular 2023-01-02.xlsx"
 
     # Nombre de la hoja que contiene la tabla
     nombre_hoja = "BD Molecular Animal"  # Reemplaza 'BD Molecular Animal' con el nombre de la hoja que contiene la tabla
@@ -82,6 +84,17 @@ def importReceptionFinalReport():
         errors="coerce",
     )
 
+    """oordonez, esta funcion podria ser mas utili si  # Convertir la columna "Fecha de toma de muestra Año- Mes- Día" a tipo datetime no funciona correctamente
+    
+        def custom_datetime_conversion(value):
+        
+        try:
+            return pd.to_datetime(value)
+        except (ValueError, TypeError):
+            return pd.NaT
+
+        tabla_molecular_animal_2023["Fecha de toma de muestra  Año- Mes- Día"] = tabla_molecular_animal_2023["Fecha de toma de muestra  Año- Mes- Día"].apply(custom_datetime_conversion) """
+
     # Aplicar una función para extraer solo la fecha (día-mes-año) sin la hora o retornar "No Indica" si el valor es NaT
     def extraer_fecha_sin_hora(fecha):
         if not pd.isnull(fecha):
@@ -109,7 +122,7 @@ def importReceptionFinalReport():
     fecha_creacion = datetime.datetime.now().strftime("%Y-%m-%d Hour %H-%M-%S")
 
     # Directorio donde se guardará el archivo CSV
-    directorio_destino = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\GenImportRecepCSV"
+    directorio_destino = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\GenImportRecepCSV"
 
     # Nombre del archivo CSV que incluye la fecha de creación
     nombre_archivo_csv = f"ExportInfoSample.csv"

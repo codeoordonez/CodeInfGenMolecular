@@ -2,11 +2,13 @@ import pandas as pd
 import os
 from datetime import datetime
 
+""" Ejecución 5 """
+
 
 def mergeDfReceptionFinalReport():
     # Definir las rutas de los archivos CSV
-    ruta_archivo1 = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\DataGeneticaGenReport\ExportFinalReport.csv"
-    ruta_archivo2 = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\GenImportRecepCSV\ExportInfoSample.csv"
+    ruta_archivo1 = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\DataGeneticaGenReport\ExportFinalReport.csv"
+    ruta_archivo2 = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\GenImportRecepCSV\ExportInfoSample.csv"
 
     # Cargar los archivos CSV en DataFrames
     df1 = pd.read_csv(ruta_archivo1, encoding="utf-8-sig")
@@ -14,7 +16,7 @@ def mergeDfReceptionFinalReport():
 
     # Unir los DataFrames usando la columna "idan" y "Identificación de la muestra" como llaves
     df_merged = pd.merge(
-        df1, df2, left_on="Código de muestra", right_on="Código de muestra", how="left"
+        df1, df2, left_on="CodigoMuestra", right_on="Código de muestra", how="left"
     )
 
     # Obtener la fecha actual en formato YYYY-MM-DD
@@ -30,7 +32,7 @@ def mergeDfReceptionFinalReport():
     df_merged["No de solicitud"] = df_merged["No de solicitud"].astype("Int64")
 
     # Obtener la ruta donde se guardarán los archivos
-    ruta_salida = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\Salida\DfFinal"
+    ruta_salida = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\Salida\DfFinal"
 
     # Exportar el DataFrame final a un archivo CSV sin la fecha y hora
     ruta_salida_normal = os.path.join(ruta_salida, "DataFrameFinal.csv")
@@ -50,4 +52,4 @@ def mergeDfReceptionFinalReport():
     print("=" * 100 + "\n")
 
 
-# mergeDfReceptionFinalReport()
+mergeDfReceptionFinalReport()

@@ -1,10 +1,12 @@
 from win32com import client
 import os
 
+""" Ejecución 7 """
+
 
 def convertXlsxToPdf():
     # Ruta de la carpeta con los archivos .xlsx
-    folder_path = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\Salida"
+    folder_path = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\Salida"
 
     # Crea una instancia del objeto Excel.Application
     xlApp = client.Dispatch("Excel.Application")
@@ -31,3 +33,6 @@ def convertXlsxToPdf():
     xlApp.Quit()
 
     print("Conversión de XLSX a PDF finalizada.")
+
+
+convertXlsxToPdf()

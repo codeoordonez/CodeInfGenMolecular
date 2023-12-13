@@ -1,10 +1,12 @@
 import fitz  # Importar la parte de PyMuPDF para manejar PDFs
 import os
 
+""" Ejecución 3 """
+
 
 def graphTransform():
     # Ruta donde se encuentran los archivos PDF
-    pdf_directory = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeInfGenMolecular\Data\DataGeneticaGenReport\Origen\GraphReport"
+    pdf_directory = r"D:\OneDrive - AGROSAVIA - CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA\SampleManager\Desarrollos\InfGenMolecular\CodeGeninformes\Data\DataGeneticaGenReport\Origen\GraphReport"
 
     # Ruta donde se guardarán las imágenes PNG
     output_directory = os.path.join(pdf_directory, "PNG_Images")
@@ -48,4 +50,4 @@ def graphTransform():
     print("=" * 100 + "\n")
 
 
-# graphTransform()
+graphTransform()
